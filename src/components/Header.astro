@@ -1,0 +1,139 @@
+---
+const navItems = [
+	{ href: '#about', label: 'About' },
+	{ href: '#work', label: 'Work' },
+	{ href: '#volunteer', label: 'Volunteer' },
+	{ href: '#hobbies', label: 'Hobbies' },
+	{ href: '#recommendations', label: 'Recommendations' },
+];
+---
+
+<header class="header">
+	<a href="/" class="logo">Shachi Solanki</a>
+	<nav class="nav" aria-label="Main">
+		<ul class="nav-list">
+			{navItems.map((item) => (
+				<li>
+					<a href={item.href} class="nav-link">{item.label}</a>
+				</li>
+			))}
+		</ul>
+	</nav>
+	<button type="button" class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+		<span class="menu-icon"></span>
+	</button>
+</header>
+
+<style>
+	.header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 1rem 1.5rem;
+		background: rgba(250, 246, 240, 0.9);
+		backdrop-filter: blur(8px);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	}
+
+	.logo {
+		font-size: 1.125rem;
+		font-weight: 700;
+		color: #1a1a1a;
+		text-decoration: none;
+		letter-spacing: -0.02em;
+	}
+
+	.logo:hover {
+		color: #0d7377;
+	}
+
+	.nav-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1.5rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.nav-link {
+		font-size: 0.9375rem;
+		font-weight: 500;
+		color: #555;
+		text-decoration: none;
+		padding: 0.375rem 0;
+		transition: color 0.2s;
+	}
+
+	.nav-link:hover {
+		color: #0d7377;
+	}
+
+	.menu-toggle {
+		display: none;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		padding: 0;
+		border: none;
+		background: none;
+		cursor: pointer;
+		color: #1a1a1a;
+	}
+
+	.menu-icon {
+		display: block;
+		width: 1.25rem;
+		height: 2px;
+		background: currentColor;
+		box-shadow: 0 -6px 0 currentColor, 0 6px 0 currentColor;
+	}
+
+	@media (max-width: 640px) {
+		.nav {
+			position: fixed;
+			inset: 0;
+			top: 3.5rem;
+			background: #faf6f0;
+			padding: 1.5rem;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.2s, visibility 0.2s;
+		}
+
+		.header[data-open] .nav {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.nav-list {
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		.nav-link {
+			font-size: 1.125rem;
+			padding: 0.75rem 0;
+			display: block;
+		}
+
+		.menu-toggle {
+			display: flex;
+		}
+	}
+</style>
+
+<script>
+	document.querySelector('.menu-toggle')?.addEventListener('click', () => {
+		document.querySelector('.header')?.toggleAttribute('data-open');
+		const btn = document.querySelector('.menu-toggle');
+		if (btn) btn.setAttribute('aria-expanded', btn.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+	});
+</script>

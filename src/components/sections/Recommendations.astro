@@ -1,0 +1,202 @@
+---
+import Section from "./Section.astro";
+
+interface Book {
+	title: string;
+	author?: string;
+	link?: string;
+	image?: { src: string; alt?: string };
+}
+
+interface MusicItem {
+	title: string;
+	artist?: string;
+	spotifyLink?: string;
+}
+
+interface PodcastItem {
+	title: string;
+	link?: string;
+	description?: string;
+}
+
+interface Props {
+	books?: Book[];
+	music?: MusicItem[];
+	podcasts?: PodcastItem[];
+	intro?: string;
+}
+const { books = [], music = [], podcasts = [], intro } = Astro.props;
+---
+
+<Section id="recommendations" title="Recommendations">
+	{intro && <p class="recommendations-intro">{intro}</p>}
+	<div class="recommendations-grid">
+		{books.length > 0 && (
+			<div class="recommendations-block">
+				<h3 class="recommendations-subtitle">Books</h3>
+				<ul class="recommendations-list recommendations-list--books">
+					{books.map((book) => (
+						<li class="recommendation-book">
+							{book.link ? (
+								<a href={book.link} target="_blank" rel="noopener noreferrer" class="recommendation-book-link">
+									{book.image && (
+										<img src={book.image.src} alt={book.image.alt ?? book.title} class="recommendation-book-cover" width={80} height={120} loading="lazy" />
+									)}
+									<span class="recommendation-book-info">
+										<span class="recommendation-book-title">{book.title}</span>
+										{book.author && <span class="recommendation-book-author">{book.author}</span>}
+									</span>
+								</a>
+							) : (
+								<div class="recommendation-book-link">
+									{book.image && (
+										<img src={book.image.src} alt={book.image.alt ?? book.title} class="recommendation-book-cover" width={80} height={120} loading="lazy" />
+									)}
+									<span class="recommendation-book-info">
+										<span class="recommendation-book-title">{book.title}</span>
+										{book.author && <span class="recommendation-book-author">{book.author}</span>}
+									</span>
+								</div>
+							)}
+						</li>
+					))}
+				</ul>
+			</div>
+		)}
+		{podcasts.length > 0 && (
+			<div class="recommendations-block">
+				<h3 class="recommendations-subtitle">Podcasts</h3>
+				<ul class="recommendations-list">
+					{podcasts.map((podcast) => (
+						<li>
+							{podcast.link ? (
+								<a href={podcast.link} target="_blank" rel="noopener noreferrer" class="recommendation-link">{podcast.title}</a>
+							) : (
+								<span>{podcast.title}</span>
+							)}
+							{podcast.description && <span class="recommendation-desc"> — {podcast.description}</span>}
+						</li>
+					))}
+				</ul>
+			</div>
+		)}
+		{music.length > 0 && (
+			<div class="recommendations-block">
+				<h3 class="recommendations-subtitle">Music</h3>
+				<ul class="recommendations-list">
+					{music.map((item) => (
+						<li>
+							{item.spotifyLink ? (
+								<a href={item.spotifyLink} target="_blank" rel="noopener noreferrer" class="recommendation-link">
+									{item.title}{item.artist ? ` — ${item.artist}` : ""}
+								</a>
+							) : (
+								<span>{item.title}{item.artist ? ` — ${item.artist}` : ""}</span>
+							)}
+							{item.spotifyLink && <span class="recommendation-desc"> (Listen on Spotify)</span>}
+						</li>
+					))}
+				</ul>
+			</div>
+		)}
+	</div>
+</Section>
+
+<style>
+	.recommendations-intro {
+		margin-bottom: 1.25rem;
+	}
+
+	.recommendations-grid {
+		display: grid;
+		gap: 1.5rem;
+		grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+	}
+
+	.recommendations-block {
+		padding: 1.25rem;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 8px;
+		border: 1px solid rgba(0, 0, 0, 0.06);
+	}
+
+	.recommendations-subtitle {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		margin: 0 0 0.75rem;
+		color: #1a1a1a;
+	}
+
+	.recommendations-list {
+		margin: 0;
+		padding-left: 1.25rem;
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: #555;
+	}
+
+	.recommendations-list--books {
+		padding-left: 0;
+		list-style: none;
+	}
+
+	.recommendation-book {
+		margin-bottom: 1rem;
+	}
+
+	.recommendation-book:last-child {
+		margin-bottom: 0;
+	}
+
+	.recommendation-book-link {
+		display: flex;
+		gap: 0.75rem;
+		align-items: flex-start;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.recommendation-book-link:hover .recommendation-book-title {
+		color: #0d7377;
+	}
+
+	.recommendation-book-cover {
+		width: 80px;
+		height: 120px;
+		object-fit: cover;
+		border-radius: 4px;
+		flex-shrink: 0;
+	}
+
+	.recommendation-book-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		min-width: 0;
+	}
+
+	.recommendation-book-title {
+		font-weight: 500;
+		color: #1a1a1a;
+	}
+
+	.recommendation-book-author {
+		font-size: 0.875rem;
+		color: #666;
+	}
+
+	.recommendation-link {
+		color: #0d7377;
+		text-decoration: none;
+	}
+
+	.recommendation-link:hover {
+		text-decoration: underline;
+	}
+
+	.recommendation-desc {
+		font-size: 0.875rem;
+		color: #666;
+	}
+</style>

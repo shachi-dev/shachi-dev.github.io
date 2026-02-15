@@ -1,0 +1,163 @@
+---
+import Section from "./Section.astro";
+
+interface HobbyImage {
+	src: string;
+	alt?: string;
+	link?: string;
+	label?: string;
+}
+
+interface Props {
+	knittingImages?: HobbyImage[];
+	foodImages?: HobbyImage[];
+}
+const { knittingImages = [], foodImages = [] } = Astro.props;
+---
+
+<Section id="hobbies" title="Hobbies">
+	<slot name="intro" />
+	<div class="hobby-block">
+		<h3 class="hobby-subtitle">Knitting</h3>
+		<div class="hobby-text">
+			<slot name="knitting" />
+		</div>
+		{knittingImages.length > 0 && (
+			<div class="hobby-gallery">
+				{knittingImages.map((img) => {
+					const content = (
+						<>
+							<img src={img.src} alt={img.alt ?? "Knitting project"} class="hobby-image" width={280} height={280} loading="lazy" />
+							{img.label && <span class="hobby-image-label">{img.label}</span>}
+						</>
+					);
+					return (
+						<div class="hobby-image-wrap">
+							{img.link ? (
+								<a href={img.link} target="_blank" rel="noopener noreferrer" class="hobby-image-link">
+									{content}
+								</a>
+							) : (
+								content
+							)}
+						</div>
+					);
+				})}
+			</div>
+		)}
+	</div>
+	<div class="hobby-block">
+		<h3 class="hobby-subtitle">Baking & Cooking</h3>
+		<div class="hobby-text">
+			<slot name="baking" />
+		</div>
+		{foodImages.length > 0 && (
+			<div class="hobby-gallery">
+				{foodImages.map((img) => {
+					const content = (
+						<>
+							<img src={img.src} alt={img.alt ?? "Food"} class="hobby-image" width={280} height={280} loading="lazy" />
+							{img.label && <span class="hobby-image-label">{img.label}</span>}
+						</>
+					);
+					return (
+						<div class="hobby-image-wrap">
+							{img.link ? (
+								<a href={img.link} target="_blank" rel="noopener noreferrer" class="hobby-image-link">
+									{content}
+								</a>
+							) : (
+								content
+							)}
+						</div>
+					);
+				})}
+			</div>
+		)}
+	</div>
+</Section>
+
+<style>
+	.hobby-block {
+		margin-top: 1.5rem;
+	}
+
+	.hobby-block:first-of-type {
+		margin-top: 0;
+	}
+
+	.hobby-subtitle {
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 0 0 0.5rem;
+		color: #1a1a1a;
+	}
+
+	.hobby-text {
+		margin-bottom: 1rem;
+	}
+
+	.hobby-text :global(p) {
+		margin: 0 0 0.5rem;
+	}
+
+	.hobby-gallery {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+
+	.hobby-image-wrap {
+		position: relative;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.hobby-image-link {
+		display: block;
+		position: relative;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.hobby-image {
+		width: 100%;
+		height: 160px;
+		object-fit: cover;
+		border-radius: 8px;
+		display: block;
+	}
+
+	.hobby-image-label {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		background: rgba(0, 0, 0, 0.6);
+		color: #fff;
+		font-size: 0.9375rem;
+		font-weight: 500;
+		opacity: 0;
+		transition: opacity 0.2s;
+		border-radius: 8px;
+		padding: 0.5rem;
+		box-sizing: border-box;
+	}
+
+	.hobby-image-wrap:hover .hobby-image-label {
+		opacity: 1;
+	}
+
+	@media (min-width: 480px) {
+		.hobby-gallery {
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		}
+
+		.hobby-image {
+			height: 200px;
+		}
+	}
+</style>

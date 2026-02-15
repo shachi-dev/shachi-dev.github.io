@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Work from '../components/sections/Work.astro';
+import Volunteer from '../components/sections/Volunteer.astro';
+import Hobbies from '../components/sections/Hobbies.astro';
+import Recommendations from '../components/sections/Recommendations.astro';
+import meImage from '../assets/me.jpg';
+import jojoImage from '../assets/jojo.JPG';
+import masterTourLogo from '../assets/mastertour.png';
+import babyBlanket from '../assets/knitting/BabyBlanket.png';
+import icelandHat from '../assets/knitting/IcelandHat.png';
+import blackForest from '../assets/food/black-forest.png';
+import lucyCake from '../assets/food/lucy-cake.png';
+import tikkaMasala from '../assets/food/tikkamasala.png';
+import shopifyLogo from '../assets/shopify.png';
+import godaddyLogo from '../assets/godaddy.png';
+
+const projects = [
+	{ title: "Master Tour", description: "I'm currently the technical lead for [Eventric Master Tour](https://www.eventric.com/)'s flagship desktop application as well as their new mobile application. I lead a team of 4 developers and we recently launched Eventric's first [new application](https://apps.apple.com/us/app/master-tour-mobile/id347364187) in nearly 7 years.", link: "https://www.eventric.com/", tags: ["Web", "React", "React Native", "Typescript", "SQLite", "WatermelonDB", "Redux", "Node.js"], logo: { src: masterTourLogo.src, alt: "Master Tour" } },
+	{ title: "Shopify", description: "I was part of the team that built [Observe](https://www.youtube.com/watch?v=ApOV8ELhIG4), a bespoke in-house observability tool built upon Grafana.", link: "#", tags: ["Grafana", "PromQL", "React", "Typescript"], logo: { src: shopifyLogo.src, alt: "Shopify" } },
+	{ title: "GoDaddy", description: "I started my career at GoDaddy and was part of the Websites and Marketing organization. I was on the team responsible for maintaining the metrics and insights dashboard.", link: "#", tags: ["React", "Typescript", "Node.js"], logo: { src: godaddyLogo.src, alt: "GoDaddy" } },
+];
+
+const recommendations = {
+	books: [
+		{ title: "The Nightingale", author: "Kristin Hannah", link: "https://www.goodreads.com/book/show/21853621-the-nightingale" },
+		{ title: "The Silent Patient", author: "Alex Michaelides", link: "https://www.goodreads.com/book/show/40097951-the-silent-patient" },
+		{ title: "Lessons in Chemistry", author: "Bonnie Garmus", link: "https://www.goodreads.com/book/show/242528917-lessons-in-chemistry" },
+	],
+	podcasts: [
+		{ title: "And That's Why We Drink", link: "https://www.andthatswhywedrink.com/", description: "Paranormal/True Crime" },
+		{ title: "Ologies", link: "https://www.alieward.com/ologies", description: "Science/Comedy" },
+	],
+	music: [
+		{ title: "Taylor Swift", spotifyLink: "https://open.spotify.com/artist/06HL4z0CvFAxyc27GXpf02" },
+		{ title: "Kaleo", spotifyLink: "https://open.spotify.com/artist/7jdFEYD2LTYjfwxOdlVjmc" },
+		{ title: "All Time Low", spotifyLink: "https://open.spotify.com/artist/46gyXjRIvN1NL1eCB8GBxo" },
+	],
+};
+
+const volunteerRoles = [
+	{ title: "Nourishing Hope", description: "Nourishing Hope is a food pantry and social services non-profit serving Chicago. Most weeks you can find me assisting with their evening food distribution. I'm also part of their Young Leaders' board, where I help raise money for the organization through our annual fundraiser, the End Hunger Social.", link: "https://www.nourishinghopechi.org/", tags: ["Volunteer", "Hunger Relief", "Social Services"] },
+	{ title: "Devi-Labs", description: "A former Shopify colleague started this organization to inspire women and BIPOC looking for a career change to pursue careers in tech. I assisted with an intro to coding course in the fall of 2022 and led a web dev course in spring 2023.", link: "https://www.devilabs.org/", tags: ["Volunteer", "Computer Science Education", "Women and BIPOC"] },
+	{ title: "Girls Who Code", description: "I was a TA for the Girls Who Code Summer Immersion program in 2017. I then led the Girls Who Code Club from Fall 2017 to Dec. 2019 at my alma mater, the University of Illinois, Urbana-Champaign.", link: "https://girlswhocode.com/", tags: ["Volunteer", "Computer Science Education", "Middle and HS Girls"] },
+];
+---
+
+<Layout title="Home">
+	<Hero name="Shachi Solanki" tagline="Web and mobile developer. Feline enthusiast." image={meImage} />
+	<article class="page">
+		<About image={jojoImage}>
+			<p>
+				I'm a Chicago-based web and mobile developer with nearly 6 years of industry experience.
+				I've worked on web, desktop, and mobile apps and love taking projects from the initial planning stage to delivery.
+			</p>
+			<p>
+				B.S. Computer Science — University of Illinois, Urbana-Champaign (Dec. 2019)
+			</p>
+			<p>
+				When I'm not coding, I'm probably knitting, trying out new recipes, attending a Cubs game, or hanging with my cat!
+			</p>
+		</About>
+
+		<Work projects={projects} intro="I have professional experience at large corporations as well as small startups." />
+
+		<Volunteer roles={volunteerRoles} intro="I believe volunteering is my civic duty and connects me to my community. Here are some causes I support." />
+
+		<Hobbies
+			knittingImages={[
+				{ src: babyBlanket.src, alt: "Baby blanket", label: "Baby Blanket", link: "https://www.ravelry.com/patterns/library/abc-baby-blanket-2" },
+				{ src: icelandHat.src, alt: "Icelandic hat", label: "Icelandic Hat", link: "https://www.etsy.com/listing/1824103933/knitted-snowy-beanie-hat-pattern-classic" },
+			]}
+			foodImages={[
+				{ src: blackForest.src, alt: "Black forest cake", label: "Black Forest Cake", link: "#" },
+				{ src: lucyCake.src, alt: "Chocolate Cake with Raspberry Puree and Chocolate Buttercream", label: "Chocolate Cake with Raspberry Puree and Chocolate Buttercream", link: "#" },
+				{ src: tikkaMasala.src, alt: "Paneer Tikka Masala with Garlic Naan", label: "Paneer Tikka Masala with Garlic Naan", link: "#" },
+			]}
+		>
+			<p slot="intro">When I need a break from screens and want to funnel my creativity into something, I turn to my hobbies.</p>
+			<p slot="knitting">I was taught to knit at the age of 7 by my grandmother and it is one of my favorite ways to relax. Check out some of my recent knits! These are not my own designs, patterns are linked via the images.</p>
+			<p slot="baking">I've been baking since high school and cooking is a more recent passion. I love being creative in the kitchen and feeding people!</p>
+		</Hobbies>
+
+		<Recommendations
+			books={recommendations.books}
+			podcasts={recommendations.podcasts}
+			music={recommendations.music}
+			intro="Podcasts, music, and books I'm into—with links to listen or read more."
+		/>
+	</article>
+</Layout>
+
+<style>
+	.page {
+		max-width: 56rem;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 4rem;
+	}
+
+	@media (max-width: 640px) {
+		.page {
+			padding: 1.5rem 1.25rem 3rem;
+		}
+	}
+</style>

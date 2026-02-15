@@ -1,0 +1,72 @@
+---
+interface Props {
+	name: string;
+	tagline: string;
+	image?: { src: string; alt?: string };
+}
+const { name, tagline, image } = Astro.props;
+---
+
+<section class="hero" id="top">
+	{image && (
+		<div class="hero-image-wrap">
+			<img src={image.src} alt={image.alt ?? name} class="hero-image" width={200} height={200} />
+		</div>
+	)}
+	<h1 class="name">{name}</h1>
+	<p class="tagline">{tagline}</p>
+</section>
+
+<style>
+	.hero {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 2rem 1.5rem 3rem;
+		margin-bottom: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		background: #365D71;
+	}
+
+	.hero-image-wrap {
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		overflow: hidden;
+		margin-bottom: 1.25rem;
+		flex-shrink: 0;
+	}
+
+	.hero-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 15%;
+		display: block;
+	}
+
+	.name {
+		font-family: 'Ephesis', cursive;
+		font-size: clamp(3rem, 12vw, 5rem);
+		font-weight: 400;
+		letter-spacing: -0.02em;
+		margin: 0 0 0.25rem;
+		line-height: 1.2;
+		color: #D4AF37;
+	}
+
+	.tagline {
+		font-size: 1.125rem;
+		font-weight: 500;
+		color: rgba(255, 255, 255, 0.9);
+		margin: 0;
+	}
+
+	@media (max-width: 640px) {
+		.hero {
+			padding: 1rem 1.25rem 2rem;
+		}
+	}
+</style>

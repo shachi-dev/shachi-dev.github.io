@@ -1,0 +1,31 @@
+---
+import Section from './Section.astro';
+
+interface Props {
+	email: string;
+}
+const { email } = Astro.props;
+---
+
+<Section id="contact" title="Contact">
+	<slot />
+	<p class="contact-email">
+		<a href={`mailto:${email}`}>{email}</a>
+	</p>
+</Section>
+
+<style>
+	.contact-email {
+		margin-top: 0.5rem !important;
+	}
+
+	.contact-email a {
+		font-weight: 500;
+		color: #0d7377;
+		text-decoration: none;
+	}
+
+	.contact-email a:hover {
+		text-decoration: underline;
+	}
+</style>

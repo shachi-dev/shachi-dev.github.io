@@ -1,0 +1,100 @@
+---
+import Section from './Section.astro';
+
+interface VolunteerRole {
+	title: string;
+	description: string;
+	link?: string;
+	tags?: string[];
+}
+
+interface Props {
+	roles: VolunteerRole[];
+	intro?: string;
+}
+const { roles, intro } = Astro.props;
+---
+
+<Section id="volunteer" title="Volunteer">
+	{intro && <p class="section-intro">{intro}</p>}
+	<ul class="role-list">
+		{roles.map((role) => (
+			<li class="role-card">
+				<h3 class="role-title">
+					{role.link ? <a href={role.link}>{role.title}</a> : role.title}
+				</h3>
+				<p class="role-desc">{role.description}</p>
+				{role.tags && role.tags.length > 0 && (
+					<ul class="role-tags">
+						{role.tags.map((tag) => <li>{tag}</li>)}
+					</ul>
+				)}
+			</li>
+		))}
+	</ul>
+</Section>
+
+<style>
+	.section-intro {
+		margin-bottom: 1.25rem !important;
+	}
+
+	.role-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 1.25rem;
+	}
+
+	.role-card {
+		padding: 1.25rem;
+		background: rgba(255, 255, 255, 0.7);
+		border: 1px solid rgba(0, 0, 0, 0.08);
+		border-radius: 12px;
+		transition: border-color 0.2s, box-shadow 0.2s;
+	}
+
+	.role-card:hover {
+		border-color: rgba(13, 115, 119, 0.3);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+	}
+
+	.role-title {
+		font-size: 1.0625rem;
+		font-weight: 600;
+		margin: 0 0 0.5rem;
+	}
+
+	.role-title a {
+		color: #1a1a1a;
+		text-decoration: none;
+	}
+
+	.role-title a:hover {
+		color: #0d7377;
+	}
+
+	.role-desc {
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: #555;
+		margin: 0 0 0.75rem;
+	}
+
+	.role-desc:last-child {
+		margin-bottom: 0;
+	}
+
+	.role-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: 0.8125rem;
+		font-weight: 500;
+		color: #0d7377;
+	}
+</style>
